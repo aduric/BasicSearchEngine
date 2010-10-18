@@ -1,0 +1,86 @@
+Basic Search
+============
+Author: Adnan Duric
+Email: aduric@gmail.com
+
+This program creates a search capability from a collection of documents.
+
+It first parses a collection of documents (delmited by a <DOC> tag) and creates an intermediary representation by stripping off all tags and unnecessary sections.
+Specifically, it takes the documents.txt and produces documents.out. Now, it parses the documents.out file into 3 files (dictionary.txt, postings.txt and docids.txt).
+These files make up the inverted index that can be used to search specific keywords.
+So, when a user wants to search by specific keywords from the document collection, the 3 index files are loaded up into memory and the program will analyze keyword
+by keyword and calculate the similarity scores.
+Once all these scores have been calculated against all the relevant documents, these results are returned and sorted.
+
+Please consult the Javadoc in the /doc folder for more information on specific classes
+
+RESOURCES
+=========
+browser/
+scanner/
+search/
+index/
+
+documents.out
+dictionary.txt
+postings.txt
+docids.txt
+newswire.txt
+
+INSTALLATION
+============
+The tar file contains all the classes in the /bin folder so there is no need for installation.
+
+If you wish to compile from sources in the /src folder, please use the build.xml Ant build file. This can also be used to laod up the project into Eclipse or
+other IDEs.
+
+If Ant is not available, please follow these instructions:
+
+javac -sourcepath src -classpath . src/*.java -d bin (to compile)
+
+java -Xmx1000M -classpath bin AdnanNLP (tu run)
+
+
+RUNNING
+=======
+To run from command line
+------------------------
+1. Go to /bin
+2. Input: java browser.DocumentBrowser to launch the GUI interface
+
+OR
+
+1. Go to /bin
+2. Input: java AdnanNLP to run the command line utility
+(optional) To run the queries from the queries.out file (must exist), input: java -q queries.out AdnanNLP
+
+To run from Eclipse
+-------------------
+1. Import project with the Ant buildfile included (build.xml)
+2. Point the Run Configuration to DocumentBrowser
+3. Run 
+
+Please note that java allocates 256M of memory by default. This could be a problem, especially for big files. If a JVM Heap error is encountered, run the application
+with the following argument: -Xmx1000M
+This will give the JVM 1GB of memory which is necessary for big files (such as loading documents.out and loading the index into memory)
+
+
+OPERATION (GUI)
+===============
+Please see the Javadoc for DocumentBrowser
+
+1. Click Load to load up a .txt file into the text area. NOTE that this is only guaranteed to work for newswire.txt
+	documents.txt will work as well but it will take a long time and will not show up in the text area.
+	If a file is loaded into the text area, you can save it by clicking on Save.
+
+2. Click on either 'Generate Index From Loaded Text' or 'Generate Index From .OUT file' to generate the inverted index files.
+	NOTE that this will overwrite any files existing by the names of dictionary.txt, postings.txt and docids.txt.
+	ALSO NOTE that generating from documents.out will take a long time.
+	THIRD NOTE: The 3 index files included here are from documents.out
+	
+3. Click Load Index. Once the index files have been generated, load the index into memory by clicking this button. 
+	This action ASSUMES that the 3 index files EXIST!
+	
+4. Search. To search for keywords, simply type them in the text field next to the search button and click the search button.
+
+NOTE: The command line utility ASSUMES that the files dictionary.txt, postings.txt and docids.txt exist!!
